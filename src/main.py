@@ -28,6 +28,7 @@ def main():
 
     @tasks.loop(minutes=6)
     async def checar():
+        print("checando por novos desafios..")
         await t.checar_novos()
 
     @client.event
