@@ -41,7 +41,7 @@ class Tracker:
         for d in novos:
             mensagem = f"Novo desafio: {d['name']} - {d['category']}"
             requests.post(f"https://ntfy.sh/{self.NTFY_TOPIC}", data=mensagem.encode("utf-8"))
-            await embeds.send_embed(self.DISCORD_CLIENT, "Novo desafio!", mensagem, discord.colour.Color.red())
+            await embeds.send_embed(self.DISCORD_CLIENT, "Novo desafio!", mensagem, discord.Color.red())
             vistos.add(str(d["id"]))
         self.salvar_vistos(vistos)
 
