@@ -34,14 +34,14 @@ class Tracker:
         r = requests.get(self.URL_API, headers=headers)
         return r.json().get("data", [])
 
-    def checar_novos(self):
+    async def checar_novos(self):
         vistos = self.carregar_vistos()
         desafios = self.buscar_desafios()
         novos = [d for d in desafios if str(d["id"]) not in vistos]
         for d in novos:
             mensagem = f"Novo desafio: {d['name']} - {d['category']}"
             requests.post(f"https://ntfy.sh/{self.NTFY_TOPIC}", data=mensagem.encode("utf-8"))
-            sent = embeds.send_embed(self.DISCORD_CLIENT, "Novo desafio!", mensagem, discord.colour.Color.red())
+            await embeds.send_embed(self.DISCORD_CLIENT, "Novo desafio!", mensagem, discord.colour.Color.red())
             vistos.add(str(d["id"]))
         self.salvar_vistos(vistos)
 
